@@ -31,7 +31,7 @@ app.post("/api/student",(req,res) => {
     const student = {
         id : initialData.length+1,
         name : req.body.name,
-        currentClass : req.body.currentClass,
+        currentClass : parseInt(req.body.currentClass),
         division : req.body.division
     }
     initialData.push(student)
