@@ -43,7 +43,7 @@ app.post("/api/student",(req,res) => {
 
 app.put('/api/student/:id',(req,res)=>{
     const student = initialData.find(s => s.id === parseInt(req.params.id))
-    if(!student) return res.status(404).send("Invalid id")
+    if(!student) return res.status(400).send("Invalid id")
 
     // if(!req.body.name || !req.body.currentClass || !req.body.division){
     //     return res.status(400).send(result.error.details[0].message);
