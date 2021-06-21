@@ -46,7 +46,12 @@ app.put('/api/student/:id',(req,res)=>{
     // if(!req.body.name || !req.body.currentClass || !req.body.division){
     //     return res.status(400).send(result.error.details[0].message);
     // }
-    if(req.body.name){
+    if(req.body.name && req.body.currentClass && req.body.division ){
+        student.name = req.body.name;
+        student.currentClass = parseInt(req.body.currentClass);
+        student.division = req.body.division;
+    }
+    else if(req.body.name){
         student.name = req.body.name;
 
     }
@@ -56,11 +61,7 @@ app.put('/api/student/:id',(req,res)=>{
     else if(req.body.division){
         student.division = req.body.division;
     }
-    else if(req.body.name || req.body.currentClass || req.body.division ){
-        student.name = req.body.name;
-        student.currentClass = req.body.currentClass;
-        student.division = req.body.division;
-    }
+    
     else{
         return res.status(400).send("Invalid Data");
     }
