@@ -50,14 +50,15 @@ app.put('/api/student/:id',(req,res)=>{
     // }
     if(req.body.name){
         student.name = req.body.name;
+
     }
-    if(req.body.currentClass){
+    else if(req.body.currentClass){
         student.currentClass = req.body.currentClass;
     }
-    if(req.body.division){
+    else if(req.body.division){
         student.division = req.body.division;
     }
-    if(req.body.name || req.body.currentClass || req.body.division ){
+    else if(req.body.name || req.body.currentClass || req.body.division ){
         student.name = req.body.name;
         student.currentClass = req.body.currentClass;
         student.division = req.body.division;
