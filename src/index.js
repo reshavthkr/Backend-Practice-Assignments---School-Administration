@@ -7,8 +7,6 @@ const bodyParser = require("body-parser");
 const port = 8080
 app.use(express.urlencoded());
 
-const Joi = require('joi');
-
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -27,9 +25,8 @@ app.get("/api/student/:id",(req,res)=>{
 
 app.post("/api/student",(req,res) => {
 
-    const result = validateStudent(req.body);
-    if(result.error){
-        return res.status(400).send(result.error.details[0].message);
+    if(!req.body.name && !req.body.currentClass && !req.body.division){
+        return res.status(400).send("enter valid details");
     }
     let count = 7
 
@@ -48,15 +45,27 @@ app.put('/api/student/:id',(req,res)=>{
     const student = initialData.find(s => s.id === parseInt(req.params.id))
     if(!student) return res.status(404).send("Invalid id")
 
-    const result = validateStudent(req.body);
-    if(result.error){
-        return res.status(400).send(result.error.details[0].message);
+    // if(!req.body.name || !req.body.currentClass || !req.body.division){
+    //     return res.status(400).send(result.error.details[0].message);
+    // }
+    if(req.body.name){
+        student.name = req.body.name;
     }
-
-    student.name = req.body.name;
-    student.currentClass = req.body.currentClass;
-    student.division = req.body.division;
-
+    if(req.body.currentClass){
+        student.currentClass = req.body.currentClass;
+    }
+    if(req.body.division){
+        student.division = req.body.division;
+    }
+    if(req.body.name || req.body.currentClass || req.body.division ){
+        student.name = req.body.name;
+        student.currentClass = req.body.currentClass;
+        student.division = req.body.division;
+    }
+    else{
+        return res.status(400).send("Invalid Data");
+    }
+    
     res.set('content-type','application/json').send({name : `${student.name}`})
 
 })
@@ -70,15 +79,6 @@ app.delete("/api/student/:id",(req,res)=>{
     res.send("deleted")
 })
 
-
-function validateStudent(student){
-    const schema = Joi.object({
-        name: Joi.string().required(),
-        currentClass: Joi.number().required(),
-        division: Joi.string().required()
-    })
-    return schema.validate(student);
-}
 
 
 
