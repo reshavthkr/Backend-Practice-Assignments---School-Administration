@@ -51,6 +51,18 @@ app.put('/api/student/:id',(req,res)=>{
         student.currentClass = parseInt(req.body.currentClass);
         student.division = req.body.division;
     }
+    else if(req.body.name && req.body.currentClass){
+        student.name = req.body.name;
+        student.currentClass = parseInt(req.body.currentClass);
+    }
+    else if(req.body.name && req.body.division){
+        student.name = req.body.name;
+        student.division = req.body.division;
+    }
+    else if(req.body.currentClass && req.body.division){
+        student.currentClass = parseInt(req.body.currentClass);
+        student.division = req.body.division;
+    }
     else if(req.body.name){
         student.name = req.body.name;
 
