@@ -28,16 +28,16 @@ app.post("/api/student",(req,res) => {
     if(!req.body.name && !req.body.currentClass && !req.body.division){
         return res.status(400).send("enter valid details");
     }
-    let count = 7
+    let count = 8
 
     const student = {
-        id : ++count,
+        id : count++,
         name : req.body.name,
         currentClass : req.body.currentClass,
         division : req.body.division
     }
     initialData.push(student)
-    res.set('content-type','application/json').send({id : `${student.id}`})
+    res.set('content-type','application/json').send({id : student.id})
 })
 
 
